@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "removeComments": true,
+        "strict": true,
+        "target": "es2019"
+    },
+    "include": ["src/**/*"]
+}

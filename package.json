@@ -1,0 +1,33 @@
+{
+    "name": "dutyblasm-bytecode",
+    "version": "0.0.1",
+    "description": "Compiler/decompiler of Dutyblasm VM bytecode modules",
+    "homepage": "https://github.com/arhadthedev/dutyblasm-bytecode#readme",
+    "license": "MIT",
+    "author": "Oleg Iarygin <oleg@arhadthedev.net> (https://arhadthedev.net/)",
+    "files": ["./lib"],
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/arhadthedev/dutyblasm-bytecode.git"
+    },
+    "scripts": {
+        "prepare": "tsc",
+        "pretest": "npm run prepare",
+        "test": "eslint --ext .mjs,.mts . && cross-env NODE_OPTIONS=--experimental-vm-modules npx jest"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.22.0",
+        "@typescript-eslint/parser": "^5.22.0",
+        "cross-env": "7.0.3",
+        "eslint": "^8.14.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-jest": "^26.1.5",
+        "jest": "^28.0.3",
+        "typescript": "^4.7.0-beta"
+    },
+    "jest": {
+        "testRegex": "/test/.*\\.test\\.mjs$",
+        "transform": {}
+    }
+}
