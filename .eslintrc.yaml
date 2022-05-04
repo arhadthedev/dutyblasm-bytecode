@@ -1,0 +1,47 @@
+# Some of ESLint's core rules rely on knowledge of the global variables
+# available to your code at runtime. These variables are added by environments;
+# see a full list at <https://eslint.org/docs/user-guide/configuring/language-options>.
+env:
+  es2022: true
+  node: true
+
+extends:
+  - eslint:all
+
+ignorePatterns:
+  - dist/**/*
+
+overrides:
+  - files: src/**
+    extends: "plugin:@typescript-eslint/all"
+    parser: "@typescript-eslint/parser"
+    parserOptions:
+      project: tsconfig.json
+    plugins: ["@typescript-eslint"]
+  - files: test/**
+    extends: "plugin:jest/all"
+    plugins: [jest]
+
+parserOptions:
+  sourceType: module
+
+root: true
+
+rules:
+  array-element-newline: [error, {ArrayPattern: {minItems: 3 }}]
+  arrow-parens: [error, as-needed]
+  func-style: off
+  function-call-argument-newline: [error, "never"]
+  # Git normalizes linebreaks on commit and checkout anyway
+  linebreak-style: off
+  one-var: [error, never]
+  padded-blocks: off
+  quote-props: [error, as-needed]
+
+  no-magic-numbers: off
+  "@typescript-eslint/no-magic-numbers": [error, {ignoreEnums: true}]
+
+  "@typescript-eslint/no-type-alias": [error, {allowAliases: in-unions}]
+
+  space-before-function-paren: off
+  "@typescript-eslint/space-before-function-paren": [error, never]

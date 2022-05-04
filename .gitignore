@@ -1,0 +1,10 @@
+# Installation artifacts (note: applications, not libraries use package-lock)
+node_modules/
+package-lock.json
+
+# Build artifacts
+dist/
+*.tgz
+
+# IDE artifacts
+.vscode/
