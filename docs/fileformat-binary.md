@@ -78,25 +78,30 @@ A Dutyblasm bytecode module is a sequence of the following fields:
             - 0x06: get_s32
             - 0x07: get_s64
             - 0x08: get_real
-            - 0x09: set
-            - 0x0a: set_u8
-            - 0x0b: set_s8
-            - 0x0c: set_u16
-            - 0x0d: set_s16
-            - 0x0e: set_u32
-            - 0x0f: set_s32
-            - 0x10: set_s64
-            - 0x11: set_real
-            - 0x12: size
-            - 0x13: type
-            - 0x14: add
-            - 0x15: mul
-            - 0x16: reciprocal
-            - 0x17: and
-            - 0x18: or
-            - 0x19: xor
-            - 0x1a: lsh
-            - 0x1b: eq
+            - 0x10: set
+            - 0x11: set_u8
+            - 0x12: set_s8
+            - 0x13: set_u16
+            - 0x14: set_s16
+            - 0x15: set_u32
+            - 0x16: set_s32
+            - 0x17: set_s64
+            - 0x18: set_real
+            - 0x20: size
+            - 0x30: type
+            - 0x40: add
+            - 0x50: mul
+            - 0x60: reciprocal
+            - 0x70: and
+            - 0x80: or
+            - 0x90: xor
+            - 0xa0: lsh
+            - 0xb0: eq
+
+             In general, an opcode consists of two independend nibbles (4-bit
+             parts). The higher part is a group and the higher part is a
+             variant. Such a design allows to fill an opcode table with all 16
+             variants of the groups thus avoiding bound checking.
 
          2. One byte of local register ID for the first input
          3. One byte of local register ID for the second input
