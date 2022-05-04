@@ -5,7 +5,13 @@
     "homepage": "https://github.com/arhadthedev/dutyblasm-bytecode#readme",
     "license": "MIT",
     "author": "Oleg Iarygin <oleg@arhadthedev.net> (https://arhadthedev.net/)",
-    "files": ["./lib"],
+    "files": ["./dist"],
+    "exports": {
+        "./binary": {
+            "types": "./dist/binary.d.mts",
+            "node": "./dist/binary.mjs"
+        }
+    },
     "type": "module",
     "repository": {
         "type": "git",
@@ -16,6 +22,10 @@
         "pretest": "npm run prepare",
         "test": "eslint --ext .mjs,.mts . && cross-env NODE_OPTIONS=--experimental-vm-modules npx jest"
     },
+    "dependencies": {
+        "numseq": "^0.2.2",
+        "uint8arrays": "^3.0.0"
+    },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^5.22.0",
         "@typescript-eslint/parser": "^5.22.0",
@@ -24,7 +34,8 @@
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-jest": "^26.1.5",
         "jest": "^28.0.3",
-        "typescript": "^4.7.0-beta"
+        "typescript": "^4.7.0-beta",
+        "type-fest": "^2.12.2"
     },
     "jest": {
         "testRegex": "/test/.*\\.test\\.mjs$",
