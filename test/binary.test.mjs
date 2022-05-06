@@ -38,14 +38,14 @@ describe("binary serializer", () => {
             {
                 blocks: [],
                 byteLists: [],
-                callerValues: [],
-                callers: [],
                 commands: [],
                 dictionaryCount: [],
                 integers: [],
-                leavingCondition: [],
-                leavingFailureTarget: [],
-                leavingSuccessTarget: [],
+                nextFalsishTarget: 0,
+                nextFalsishTargetInitialValues: [],
+                nextTargetCondition: 0,
+                nextTrueishTarget: 0,
+                nextTrueishTargetInitialValues: [],
                 reals: []
             },
             {
@@ -56,9 +56,11 @@ describe("binary serializer", () => {
                 commands: generateCommands(uniqueNumbers),
                 dictionaryCount: getUniqueArray(),
                 integers: getUniqueArray(),
-                leavingCondition: uniqueNumbers.next(),
-                leavingFailureTarget: uniqueNumbers.next(),
-                leavingSuccessTarget: uniqueNumbers.next(),
+                nextFalsishTarget: uniqueNumbers.next(),
+                nextFalsishTargetInitialValues: getUniqueArray(),
+                nextTargetCondition: uniqueNumbers.next(),
+                nextTrueishTarget: uniqueNumbers.next(),
+                nextTrueishTargetInitialValues: getUniqueArray(),
                 reals: getUniqueArray()
             }
         ];

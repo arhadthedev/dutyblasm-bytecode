@@ -13,27 +13,8 @@ A Dutyblasm bytecode module is a sequence of the following fields:
 2. A list of basic blocks identified by their sequence number. The list spans
    until the end of a stream. Each list entry has a variable size and the
    following structure:
-   1. A list of IDs of all modules that are the tails of the incoming edges of
-      a control flow graph:
 
-      1. One-byte unsigned integer count of list items
-      2. A sequence of two-byte block identifiers
-
-      Each ID must either exist inside the module or be equal to 0xffff to
-      denote transition to/from a host.
-
-
-   2. A two-level list of borrowed local values grouped by incoming modules.
-      Each top-level list item maps to a local value of the current block;
-      each second-level item describes a borrowed value for each incoming
-      module.
-
-      1. One-byte unsigned integer total count of list items (number of new
-         local values times a number of the incoming block)
-      2. A sequence of one-byte local value identifiers. The incoming module
-         order is the same as in the 2.1
-
-   3. A list of 32-bit signed integers mapped to `integer` data type of the VM.
+   1. A list of 32-bit signed integers mapped to `integer` data type of the VM.
 
       1. One-byte unsigned integer total count of list items
       2. A sequence of four-byte native-endian signed numbers
@@ -41,13 +22,13 @@ A Dutyblasm bytecode module is a sequence of the following fields:
       64-bit numbers may be assembled from two 32-bit ones, since they are too
       rare to be stored literally.
 
-   4. A list of IEEE 754-2008 binary64 real numbers mapped to `real` data type
+   1. A list of IEEE 754-2008 binary64 real numbers mapped to `real` data type
      of the VM.
 
       1. One-byte unsigned integer total count of list items
       2. A sequence of eigth-byte native-endian byte sequences
 
-   4. A list of arbitrary basic block IDs references to which are put into local
+   1. A list of arbitrary basic block IDs references to which are put into local
       values and may be someday used to specify a node exit edge.
 
       1. One-byte unsigned integer total count of list items
@@ -56,16 +37,16 @@ A Dutyblasm bytecode module is a sequence of the following fields:
       Each ID must either exist inside the module or be equal to 0xffff to
       denote transition to/from a host.
 
-   5. A list of prefilled copy-on-write octet (byte) lists.
+   1. A list of prefilled copy-on-write octet (byte) lists.
 
       1. One-byte unsigned integer total count of list items
       2. Each item is a list itself:
          1. One-byte unsigned integer total count of octets in the octet list
          2. A sequence of octets
 
-   6. A one-byte count of new empty dictionary items that need to be allocated.
+   1. A one-byte count of new empty dictionary items that need to be allocated.
 
-   6. A list of expressions:
+   1. A list of expressions:
 
       1. One-byte unsigned integer total count of expressions for a block
       2. A sequence of four-field tuples:
@@ -109,7 +90,23 @@ A Dutyblasm bytecode module is a sequence of the following fields:
          3. One byte of local register ID for the second input
          4. One byte of local register ID for the third input
 
-   7. One byte local register ID used as a boolean choice between two exit edges
+   1. One byte local register ID used as a boolean choice between two exit edges
       of the block
-   8. One byte local register ID used as a "trueish" node head
-   9. One byte local register ID used as a "falsish" node head.
+
+   1. One byte local register ID used as a "trueish" node head
+
+   1. One byte local register ID used as a "falsish" node head
+
+   1. A list of values used to prepopulate first N registers before
+      transitioning to a "trueish" node:
+
+      1. One-byte unsigned integer total count of the values transferred
+      2. A sequence of one-byte current block registers IDs used for the
+         transfer
+
+   1. A list of values used to prepopulate first N registers before
+      transitioning to a "falseish" node.
+
+      1. One-byte unsigned integer total count of the values transferred
+      2. A sequence of one-byte current block registers IDs used for the
+         transfer

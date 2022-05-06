@@ -47,9 +47,6 @@ export enum Opcodes {
 const signature = 0x43424244;
 
 export interface LinearBlock {
-    callers: number[];
-    callerValues: number[];
-
     integers: number[];
     reals: number[];
     blocks: number[];
@@ -58,9 +55,11 @@ export interface LinearBlock {
 
     commands: [number, number, number, number][];
 
-    leavingCondition: number;
-    leavingSuccessTarget: number;
-    leavingFailureTarget: number;
+    nextTargetCondition: number;
+    nextTrueishTarget: number;
+    nextFalsishTarget: number;
+    nextTrueishTargetInitialValues: number[];
+    nextFalsishTargetInitialValues: number[];
 }
 
 /**
@@ -82,8 +81,6 @@ export function build(deserialized: ReadonlyDeep<LinearBlock[]>): Uint8Array {
     ];
 
     const chunks: ReadonlyDeep<TypedArray>[] = deserialized.flatMap(block => [
-        ...serializeArray(new Uint16Array(block.callers)),
-        ...serializeArray(new Uint8Array(block.callerValues)),
         ...serializeArray(new Int32Array(block.integers)),
         ...serializeArray(new Float64Array(block.reals)),
         ...serializeArray(new Uint16Array(block.blocks)),
@@ -92,10 +89,12 @@ export function build(deserialized: ReadonlyDeep<LinearBlock[]>): Uint8Array {
         ...block.commands.map(opword => new Uint8Array(opword)),
         new Uint8Array([block.dictionaryCount]),
         new Uint8Array([
-            block.leavingCondition,
-            block.leavingSuccessTarget,
-            block.leavingFailureTarget
-        ])
+            block.nextTargetCondition,
+            block.nextTrueishTarget,
+            block.nextFalsishTarget
+        ]),
+        ...serializeArray(new Uint8Array(block.nextTrueishTargetInitialValues)),
+        ...serializeArray(new Uint8Array(block.nextFalsishTargetInitialValues))
     ]);
     const binary = [
         new Uint32Array([signature]),
