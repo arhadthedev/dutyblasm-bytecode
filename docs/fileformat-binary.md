@@ -63,6 +63,8 @@ A Dutyblasm bytecode module is a sequence of the following fields:
          1. One-byte unsigned integer total count of octets in the octet list
          2. A sequence of octets
 
+   6. A one-byte count of new empty dictionary items that need to be allocated.
+
    6. A list of expressions:
 
       1. One-byte unsigned integer total count of expressions for a block
