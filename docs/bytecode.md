@@ -11,9 +11,9 @@ Dutyblasm virtual machine is:
   - the basic block maintains a collection of local values accessible inside
     the block only
 
-  - the block at the head of the edge can specify what values from the tail
-    of the edge it wanth to borrow into its own local values for computations or
-    to allow them to be borrowed further
+  - the block at the tail of the edge can pass some of its values to the block
+    as the head of the edge. The head, in its turn, can use them for
+    computations or passing further
 
 - with dynamic inferred structural type system (dictionary | octet-list |
   integer | real | code-block-reference | undefined)
