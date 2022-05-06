@@ -79,9 +79,8 @@ export function build(deserialized: ReadonlyDeep<LinearBlock[]>): Uint8Array {
         new Uint8Array(values.map(value => value.length)),
         new TextEncoder().encode(values.join(""))
     ];
-    const serializeCommands = (
-        commands: readonly (readonly [number, number, number, number])[]
-    ): Uint8Array => new Uint8Array([
+    const serializeCommands = (commands: readonly (readonly [number, number,
+        number, number])[]): Uint8Array => new Uint8Array([
         commands.length,
         ...commands.flat()
     ]);
