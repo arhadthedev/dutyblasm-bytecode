@@ -20,12 +20,13 @@ function getArray(sequence) {
 
 function generateCommands(sequence) {
     const wraparound = 256;
-    return Object.keys(Opcodes).filter(value => !isNaN(value)).map(code => [
-        code,
-        sequence.next() % wraparound,
-        sequence.next() % wraparound,
-        sequence.next() % wraparound
-    ]);
+    return Object.keys(Opcodes).filter(value => !isNaN(value)).
+        map(code => [
+            code,
+            sequence.next() % wraparound,
+            sequence.next() % wraparound,
+            sequence.next() % wraparound
+        ]);
 }
 
 describe("binary serializer", () => {
@@ -49,10 +50,9 @@ describe("binary serializer", () => {
             },
             {
                 blocks: getUniqueArray(),
-                byteLists: getUniqueArray(),
+                byteLists: ["foo", "bar"],
                 callerValues: getUniqueArray(),
                 callers: getUniqueArray(),
-                byteLists: ['foo', 'bar'],
                 commands: generateCommands(uniqueNumbers),
                 dictionaryCount: getUniqueArray(),
                 integers: getUniqueArray(),
