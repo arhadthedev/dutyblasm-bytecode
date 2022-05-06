@@ -90,6 +90,7 @@ export function build(deserialized: ReadonlyDeep<LinearBlock[]>): Uint8Array {
         ...serializeStrings(block.byteLists),
         new Uint8Array([block.commands.length]),
         ...block.commands.map(opword => new Uint8Array(opword)),
+        new Uint8Array([block.dictionaryCount]),
         new Uint8Array([
             block.leavingCondition,
             block.leavingSuccessTarget,
