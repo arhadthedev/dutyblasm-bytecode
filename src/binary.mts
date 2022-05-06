@@ -79,15 +79,20 @@ export function build(deserialized: ReadonlyDeep<LinearBlock[]>): Uint8Array {
         new Uint8Array(values.map(value => value.length)),
         new TextEncoder().encode(values.join(""))
     ];
+    const serializeCommands = (
+        commands: readonly (readonly [number, number, number, number])[]
+    ): Uint8Array => new Uint8Array([
+        commands.length,
+        ...commands.flat()
+    ]);
 
-    const chunks: ReadonlyDeep<TypedArray>[] = deserialized.flatMap(block => [
+    const blocks = deserialized.flatMap(block => [
         ...serializeArray(new Int32Array(block.integers)),
         ...serializeArray(new Float64Array(block.reals)),
         ...serializeArray(new Uint16Array(block.blocks)),
         ...serializeStrings(block.byteLists),
-        new Uint8Array([block.commands.length]),
-        ...block.commands.map(opword => new Uint8Array(opword)),
         new Uint8Array([block.dictionaryCount]),
+        serializeCommands(block.commands),
         new Uint8Array([
             block.nextTargetCondition,
             block.nextTrueishTarget,
@@ -98,7 +103,7 @@ export function build(deserialized: ReadonlyDeep<LinearBlock[]>): Uint8Array {
     ]);
     const binary = [
         new Uint32Array([signature]),
-        ...chunks
+        ...blocks
     ].map((chunk: ReadonlyDeep<TypedArray>) => new Uint8Array(chunk.buffer));
     return concat(binary);
 }
